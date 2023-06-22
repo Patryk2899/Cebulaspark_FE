@@ -4,7 +4,6 @@ import {
     Box,
     Typography,
     Stack,
-    Link as MuiLink,
     FormControlLabel,
     Checkbox,
 } from '@mui/material';
@@ -15,8 +14,6 @@ import {Link, useNavigate} from 'react-router-dom';
 import { literal, object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from '../components/FormInput';
-import { ReactComponent as GoogleLogo } from '../assets/google.svg';
-import { ReactComponent as GitHubLogo } from '../assets/github.svg';
 import styled from '@emotion/styled';
 import {ReactComponent as LogoSvg} from "../assets/CebulaSpark.svg";
 import {checkTokenValidity} from "../api/user";
@@ -27,25 +24,6 @@ export const LinkItem = styled(Link)`
   &:hover {
     text-decoration: underline;
     color: #5ea1b6;
-  }
-`;
-
-export const OauthMuiLink = styled(MuiLink)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f6f7;
-  border-radius: 1;
-  padding: 0.6rem 0;
-  column-gap: 1rem;
-  text-decoration: none;
-  color: #393e45;
-  font-weight: 500;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #fff;
-    box-shadow: 0 1px 13px 0 rgb(0 0 0 / 15%);
   }
 `;
 
