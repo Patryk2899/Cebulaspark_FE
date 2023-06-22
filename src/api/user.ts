@@ -5,13 +5,17 @@ export const checkTokenValidity = async () => {
     if (localStorage.getItem("token") === null) {
         return false
     }
-    const promise = await axios.get(PUBLIC_URL + `${process.env.REACT_APP_CURRENT_USER}`, {
+    return await axios.get(PUBLIC_URL + `${process.env.REACT_APP_CURRENT_USER}`, {
         headers: {
             Authorization: localStorage.getItem("token")
         }
-    });
-    return promise.status.toString() === "200";
-
+    }).then(response => {
+        return true
+    })
+        .catch(err => {
+            localStorage.removeItem("token")
+            return false
+        });
 };
 
 export const getUserData = async (): Promise<UserData> => {
