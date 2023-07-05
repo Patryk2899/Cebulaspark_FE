@@ -1,0 +1,21 @@
+{
+  "translation": {
+    "login": {
+      "forgotPassword": "Zapomniałeś hasła?",
+      "needAnAccount": "Potrzebujesz konta?",
+      "signUpHere": " Zarejestruj się",
+      "LogIntoYourAccount": "Zaloguj się na swoje konto",
+      "password": "Hasło",
+      "login": "Zaloguj"
+    },
+    "signup": {
+      "welcome": "Witaj na CebulaSpark!",
+      "newAccount": "Stwórz konto",
+      "password": "Hasło",
+      "confirmPassword": "Potwierdź hasło",
+      "signUp": "Zarejestruj się",
+      "haveAccount": "Masz już konto?",
+      "login": "Zaloguj"
+    }
+  }
+}

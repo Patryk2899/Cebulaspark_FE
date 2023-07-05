@@ -13,6 +13,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import {checkTokenValidity} from "../api/user"
 import {PUBLIC_URL} from "../api/api-commons";
+import {useTranslation} from "react-i18next";
 
 const signupSchema = object({
     email: string().min(1, 'Email is required').email('Email is invalid'),
@@ -30,6 +31,8 @@ type ISignUp = TypeOf<typeof signupSchema>;
 
 const SignupPage: FC = () => {
 
+    // @ts-ignore
+    const {t} = useTranslation();
     const navigate = useNavigate();
 
     useLayoutEffect( () => {
@@ -99,7 +102,7 @@ const SignupPage: FC = () => {
                                     pb: { sm: '3rem' },
                                 }}
                             >
-                                Welcome To CebulaSpark!
+                                {t('signup.welcome')}
                             </Typography>
                             <Grid
                                 item
@@ -131,18 +134,18 @@ const SignupPage: FC = () => {
                                             component='h1'
                                             sx={{ textAlign: 'center', mb: '1.5rem' }}
                                         >
-                                            Create new your account
+                                            {t('signup.newAccount')}
                                         </Typography>
 
                                         <FormInput
-                                            label='Enter your email'
+                                            label='Email'
                                             type='email'
                                             name='email'
                                             focused
                                             required
                                         />
                                         <FormInput
-                                            type='password'
+                                            type={t('signup.password')}
                                             label='Password'
                                             name='password'
                                             required
@@ -150,7 +153,7 @@ const SignupPage: FC = () => {
                                         />
                                         <FormInput
                                             type='password'
-                                            label='Confirm Password'
+                                            label={t('signup.confirmPassword')}
                                             name='passwordConfirm'
                                             required
                                             focused
@@ -167,7 +170,7 @@ const SignupPage: FC = () => {
                                                 marginInline: 'auto',
                                             }}
                                         >
-                                            Sign Up
+                                            {t('signup.signUp')}
                                         </LoadingButton>
                                     </Box>
                                 </Grid>
@@ -178,7 +181,7 @@ const SignupPage: FC = () => {
                             <Grid container justifyContent='center'>
                                 <Stack sx={{ mt: '3rem', textAlign: 'center' }}>
                                     <Typography sx={{ fontSize: '0.9rem', mb: '1rem' }}>
-                                        Already have an account? <LinkItem to='/'>Login</LinkItem>
+                                        {t('signup.haveAccount')} <LinkItem to='/'>{t('signup.login')}</LinkItem>
                                     </Typography>
                                 </Stack>
                             </Grid>

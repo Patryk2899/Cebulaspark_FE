@@ -5,10 +5,10 @@ import {
     Typography,
     Stack,
     FormControlLabel,
-    Checkbox,
+    Checkbox, FormControl, InputLabel, Select,
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {FC, useLayoutEffect} from 'react';
+import {FC, useLayoutEffect, useState} from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import {Link, useNavigate} from 'react-router-dom';
 import { literal, object, string, TypeOf } from 'zod';
@@ -17,6 +17,10 @@ import FormInput from '../components/FormInput';
 import styled from '@emotion/styled';
 import {ReactComponent as LogoSvg} from "../assets/CebulaSpark.svg";
 import {checkTokenValidity} from "../api/user";
+import MenuItem from "@mui/material/MenuItem";
+import * as React from "react";
+import {Trans, useTranslation} from "react-i18next";
+import i18next from "i18next";
 
 export const LinkItem = styled(Link)`
   text-decoration: none;
@@ -44,6 +48,8 @@ const LoginPage: FC = () => {
         password: '',
     };
 
+    // @ts-ignore
+    const {t} = useTranslation();
     const navigate = useNavigate();
 
     useLayoutEffect( () => {
@@ -65,6 +71,10 @@ const LoginPage: FC = () => {
         console.log(values);
     };
 
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
         <Container
             maxWidth={false}
@@ -119,45 +129,22 @@ const LoginPage: FC = () => {
                                             component='h1'
                                             sx={{ textAlign: 'center', mb: '1.5rem' }}
                                         >
-                                            Log into your account
+                                            {t("login.LogIntoYourAccount")}
                                         </Typography>
 
                                         <FormInput
-                                            label='Enter your email'
+                                            label='Email'
                                             type='email'
                                             name='email'
                                             focused
                                             required
                                         />
                                         <FormInput
-                                            type='password'
-                                            label='Password'
+                                            type='Password'
+                                            label={t('login.password')}
                                             name='password'
                                             required
                                             focused
-                                        />
-
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    size='small'
-                                                    aria-label='trust this device checkbox'
-                                                    required
-                                                    {...methods.register('persistUser')}
-                                                />
-                                            }
-                                            label={
-                                                <Typography
-                                                    variant='body2'
-                                                    sx={{
-                                                        fontSize: '0.8rem',
-                                                        fontWeight: 400,
-                                                        color: '#5e5b5d',
-                                                    }}
-                                                >
-                                                    Trust this device
-                                                </Typography>
-                                            }
                                         />
 
                                         <LoadingButton
@@ -171,7 +158,7 @@ const LoginPage: FC = () => {
                                                 marginInline: 'auto',
                                             }}
                                         >
-                                            Login
+                                            {t('login.login')}
                                         </LoadingButton>
                                     </Box>
                                 </Grid>
@@ -188,12 +175,11 @@ const LoginPage: FC = () => {
                             <Grid container justifyContent='center'>
                                 <Stack sx={{ mt: '3rem', textAlign: 'center' }}>
                                     <Typography sx={{ fontSize: '0.9rem', mb: '1rem' }}>
-                                        Need an account?{' '}
-                                        <LinkItem to='/signup'>Sign up here</LinkItem>
+                                        {t('login.needAnAccount')}
+                                        <LinkItem to='/signup'>{t('login.signUpHere')}</LinkItem>
                                     </Typography>
                                     <Typography sx={{ fontSize: '0.9rem' }}>
-                                        Forgot your{' '}
-                                        <LinkItem to='/forgotPassword'>password?</LinkItem>
+                                        <LinkItem to='/forgotPassword'>{t('login.forgotPassword')}</LinkItem>
                                     </Typography>
                                 </Stack>
                             </Grid>
