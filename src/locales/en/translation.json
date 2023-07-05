@@ -1,0 +1,21 @@
+{
+  "translation": {
+    "login": {
+      "forgotPassword": "Forgot your password?",
+      "needAnAccount": "Need an account",
+      "signUpHere": " Sign up here",
+      "LogIntoYourAccount": "Log into your account",
+      "password": "Password",
+      "login": "Login"
+    },
+    "signup": {
+      "welcome": "Welcome To CebulaSpark!",
+      "newAccount": "Create account",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "signUp": "Sign up",
+      "haveAccount": "Already have an account?",
+      "login": "Login"
+    }
+  }
+}
