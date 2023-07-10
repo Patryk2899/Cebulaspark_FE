@@ -8,6 +8,7 @@ import MainPage from "./pages/MainPage";
 
 import { useTranslation } from 'react-i18next'
 import {useEffect} from "react";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
     const showToastMessage = () => {
@@ -32,6 +33,7 @@ function App() {
           <Route path='/' element={<LoginPage />} />
           <Route path='/signup' element={<SignupPage />} />
           <Route path='/main' element={<MainPage />} />
+          <Route path='/new_password' element={<ForgotPasswordPage />} />
         </Routes>
       </>
   );

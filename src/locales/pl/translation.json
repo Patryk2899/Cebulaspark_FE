@@ -16,6 +16,12 @@
       "signUp": "Zarejestruj się",
       "haveAccount": "Masz już konto?",
       "login": "Zaloguj"
+    },
+    "password": {
+      "newPassword": "Wprowadź nowe hasło",
+      "confirmButton": "Zmień hasło",
+      "success": "Hasło zmienione",
+      "linkExpired": "Link wygasł"
     }
   }
 }
