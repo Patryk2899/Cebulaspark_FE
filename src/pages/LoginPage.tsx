@@ -72,9 +72,6 @@ const LoginPage: FC = () => {
     };
 
     // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
     return (
         <Container
             maxWidth={false}
