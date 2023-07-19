@@ -6,7 +6,8 @@
       "signUpHere": " Sign up here",
       "LogIntoYourAccount": "Log into your account",
       "password": "Password",
-      "login": "Login"
+      "login": "Login",
+      "failedLogin": "Check you credentials"
     },
     "signup": {
       "welcome": "Welcome To CebulaSpark!",

@@ -21,6 +21,9 @@ import MenuItem from "@mui/material/MenuItem";
 import * as React from "react";
 import {Trans, useTranslation} from "react-i18next";
 import i18next from "i18next";
+import axios from "axios";
+import {PUBLIC_URL} from "../api/api-commons";
+import {toast} from "react-toastify";
 
 export const LinkItem = styled(Link)`
   text-decoration: none;
@@ -68,7 +71,15 @@ const LoginPage: FC = () => {
     });
 
     const onSubmitHandler: SubmitHandler<ILogin> = (values: ILogin) => {
-        console.log(values);
+        console.log(values)
+        axios.post(PUBLIC_URL + `${process.env.REACT_APP_LOGIN_URL}`, { user: values })
+            .then( response => {
+                localStorage.setItem('token', response.headers.authorization)
+                navigate('/main')
+            })
+            .catch(err => {
+                toast.error(t('login.failedLogin'))
+            })
     };
 
     // @ts-ignore
