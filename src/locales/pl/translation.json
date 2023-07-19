@@ -6,7 +6,8 @@
       "signUpHere": " Zarejestruj się",
       "LogIntoYourAccount": "Zaloguj się na swoje konto",
       "password": "Hasło",
-      "login": "Zaloguj"
+      "login": "Zaloguj",
+      "failedLogin": "Email lub hasło niepoprawne"
     },
     "signup": {
       "welcome": "Witaj na CebulaSpark!",
