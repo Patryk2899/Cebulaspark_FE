@@ -1,0 +1,11 @@
+.MuiTablePagination-root {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.MuiTableHead-root {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
