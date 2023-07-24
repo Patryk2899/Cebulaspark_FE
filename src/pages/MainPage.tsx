@@ -6,6 +6,7 @@ import axios from "axios";
 import {PUBLIC_URL} from "../api/api-commons";
 import {FormControl, Grid, InputLabel, MenuItem, Select} from "@mui/material";
 import '../styles/main.css'
+import TableComponent from "../components/TableComponent";
 
 interface CategoryData {
     id: number;
@@ -15,15 +16,51 @@ interface CategoryData {
     updated_at: string;
 }
 
+
+interface response {
+    id: number;
+    ends_at: string;
+    title: string;
+    description: string;
+    link: string;
+    main_image_url: string;
+}
+
 const MainPage: FC = () => {
 
+    const [data, setData] = React.useState<response[]>([]);
     const [isLogged, setIsLogged] = useState(false);
     const [categories, setCategories] = useState([])
-    const [category, setCategory] = useState<CategoryData>()
+    const [category, setCategory] = useState<CategoryData>(null)
 
-    const handleChange = (event: React.ChangeEvent<CategoryData>) => {
-        setCategory(event.target.value as CategoryData);
+    const handleChange = async (event: React.ChangeEvent<CategoryData>) => {
+        updateCategory(event.target.value as CategoryData).then();
+        fetchData(event.target.value).then();
     };
+
+    const updateCategory = async (value: CategoryData) => {
+        setCategory(value as CategoryData);
+    }
+
+    const fetchData = async (p: any) => {
+        axios.get(PUBLIC_URL + `${process.env.REACT_APP_BARGAIN_SHOW_URL}`, {
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+            },
+            params: {
+                category: p
+            }
+        }).then(response => {
+            setData(response.data)
+            console.log(response.data)
+        })
+    }
+
+    useEffect(() => {
+        fetchData(null).then()
+        console.log(data)
+    }, [])
 
     const fetchCategories = async () => {
         axios.get(PUBLIC_URL + `${process.env.REACT_APP_CATEGORIES_URL}`, {
@@ -31,14 +68,14 @@ const MainPage: FC = () => {
                 'content-type': 'application/json',
                 accept: 'application/json',
             },
+            params: {
+                category: category
+            }
         })
             .then( response => {
                 setCategories(response.data)
             })
     }
-
-    useEffect(() => {
-    }, [])
 
     useLayoutEffect( () => {
         const checkToken = async () => {
@@ -86,11 +123,8 @@ const MainPage: FC = () => {
                     </FormControl>
                 </Grid>
             </Grid>
+            <TableComponent data={data}/>
         </div>
     )
 }
 export default MainPage;
-
-function componentDidMount() {
-    throw new Error("Function not implemented.");
-}
