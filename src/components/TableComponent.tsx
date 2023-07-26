@@ -15,10 +15,13 @@ import { styled } from '@mui/system';
 import TablePagination, {
     tablePaginationClasses as classes,
 } from '@mui/base/TablePagination';
-import {useEffect} from "react";
+import {ChangeEvent, useEffect} from "react";
 import {PUBLIC_URL} from "../api/api-commons";
 import axios from "axios";
 import '../styles/table.css'
+import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 interface CategoryData {
     id: number;
@@ -53,12 +56,35 @@ const TableComponent: React.FC<props> = (props) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    // @ts-ignore
+    const {t} = useTranslation();
+    const navigate = useNavigate();
+
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
         newPage: number,
     ) => {
         setPage(newPage);
     };
+
+    const handleClick = (bargain_id: number) => {
+        axios.get(PUBLIC_URL + `${process.env.REACT_APP_BARGAIN_URL}`, {
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            params: {
+                id: bargain_id
+            }
+        })
+            .then( response => {
+                navigate('/bargain', { state: { bargain: response.data } });
+            })
+            .catch(err => {
+                toast.error("Something went wrong")
+            })
+    }
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -102,7 +128,7 @@ const TableComponent: React.FC<props> = (props) => {
                                                 <img src={ data.main_image_url } />
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="inherit" size="small">
-                                                <Button variant="contained">Contained</Button>
+                                                <Button variant="contained" onClick={() => handleClick(data.id)}>Contained</Button>
                                             </TableCell>
                                         </TableRow>
                                     );
