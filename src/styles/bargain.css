@@ -1,0 +1,20 @@
+.image {
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.text {
+    padding: 10px;
+}
+
+.image img {
+    max-width: 100%; /* Ensure the image scales down on smaller screens */
+}
+
+@media (max-width: 768px) {
+    .image,
+    .text {
+        padding: 5px;
+    }
+}
