@@ -95,7 +95,7 @@ const BargainPage: FC<BargainProps> = (props) => {
                 </Grid>
                 </Divider>
             </Box>
-            <CommentBox comments={comments}/>
+            <CommentBox comments={comments} bargain_id={location.state.bargain.id}/>
         </div>
     )
 }

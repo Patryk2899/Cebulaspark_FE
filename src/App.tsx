@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import {useEffect} from "react";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import BargainPage from "./pages/BargainPage";
+import BargainCreatePage from "./pages/BargainCreatePage";
 
 function App() {
     const showToastMessage = () => {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/main' element={<MainPage />} />
           <Route path='/new_password' element={<ForgotPasswordPage />} />
           <Route path='/bargain' element={<BargainPage />} />
+          <Route path='/bargain/create' element={<BargainCreatePage />} />
         </Routes>
       </>
   );

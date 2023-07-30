@@ -19,9 +19,10 @@ interface Comment {
 
 interface CommentBoxProps {
     comments: Comment[];
+    bargain_id: number;
 }
 
-const CommentBox: React.FC<CommentBoxProps> = ({ comments }) => {
+const CommentBox: React.FC<CommentBoxProps> = ({ comments, bargain_id}) => {
     const [newComment, setNewComment] = useState('');
     const commentsListRef = useRef<HTMLUListElement>(null);
 
@@ -42,7 +43,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({ comments }) => {
         if (newComment.trim() !== '') {
             axios.post(PUBLIC_URL + `${process.env.REACT_APP_COMMENTS_CREATE_URL}`, {
                 body: newComment,
-                bargain_id: comments[0].bargain_id
+                bargain_id: bargain_id
             }, {
                 headers: {
                     'content-type': 'application/json',
