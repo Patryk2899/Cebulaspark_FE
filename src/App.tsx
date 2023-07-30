@@ -11,6 +11,7 @@ import {useEffect} from "react";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import BargainPage from "./pages/BargainPage";
 import BargainCreatePage from "./pages/BargainCreatePage";
+import EmailChangePage from "./pages/EmailChangePage";
 
 function App() {
     const showToastMessage = () => {
@@ -38,6 +39,7 @@ function App() {
           <Route path='/new_password' element={<ForgotPasswordPage />} />
           <Route path='/bargain' element={<BargainPage />} />
           <Route path='/bargain/create' element={<BargainCreatePage />} />
+          <Route path='/email/change' element={<EmailChangePage />} />
         </Routes>
       </>
   );

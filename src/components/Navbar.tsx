@@ -15,11 +15,13 @@ import { ReactComponent as Logo} from "../assets/CebulaSparkSmall.svg";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {useState} from "react";
-import {FormControl, InputLabel, Select} from '@mui/material';
+import {FormControl, InputLabel, Link, Select} from '@mui/material';
 import  "../styles/navbar.css"
+import axios from "axios";
+import {PUBLIC_URL} from "../api/api-commons";
+import {toast} from "react-toastify";
 
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 interface NavbarProps {
     isLoggedIn: boolean
@@ -45,12 +47,48 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         setAnchorElUser(null);
     };
 
+    const handlePasswordChange = () => {
+        axios.post(PUBLIC_URL + `${process.env.REACT_APP_PASSWORD_RESET}`, {}, {
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+            .then(response => {
+                toast.info('Check your email')
+            })
+        setAnchorElUser(null);
+    }
+
+    const handleEmailChange = () => {
+        navigate('/change/email')
+        setAnchorElUser(null);
+    }
+
+    const handleLogout = () => {
+        axios.delete(PUBLIC_URL + `${process.env.REACT_APP_LOGOUT_URL}`, {
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+            .then( response => {
+                localStorage.removeItem('token')
+                navigate('/')
+                toast.info('You have been logged out')
+            })
+        setAnchorElUser(null);
+    }
+
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <IconButton
                         size="large"
+                        href="/main"
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
@@ -95,24 +133,24 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                             ))}
                         </Menu>
                     </Box>
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            display: {xs: 'flex', md: 'none'},
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        CEBULASPARK
-                    </Typography>
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="/main"
+                            sx={{
+                                mr: 2,
+                                display: {xs: 'flex', md: 'none'},
+                                flexGrow: 1,
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            CEBULASPARK
+                        </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
                             <Button
@@ -147,11 +185,19 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            {
+                                <div>
+                                    <MenuItem key={1} onClick={handlePasswordChange}>
+                                        <Typography textAlign="center">Change password</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={2} onClick={handleEmailChange}>
+                                        <Typography textAlign="center">Change email</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={3} onClick={handleLogout}>
+                                        <Typography textAlign="center">Logout</Typography>
+                                    </MenuItem>
+                                </div>
+                            }
                         </Menu>}
                         {!props.isLoggedIn && <Button
                             onClick={() => {
