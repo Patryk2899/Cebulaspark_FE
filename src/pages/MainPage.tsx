@@ -86,14 +86,6 @@ const MainPage: FC = () => {
         fetchCategories().then()
     }, [isLogged]);
 
-    useLayoutEffect( () => {
-        const checkToken = async () => {
-            const result = await checkTokenValidity();
-            setIsLogged(result)
-        }
-        checkToken().then()
-    }, [isLogged]);
-
     return (
         <div>
             <div>
