@@ -86,7 +86,7 @@ const BargainCreateForm: React.FC<ImageUpdateFormProps> = ({ onSubmit }) => {
         axios.get(PUBLIC_URL + `${process.env.REACT_APP_CATEGORIES_URL}`, {
             headers: {
                 'content-type': 'application/json',
-                accept: 'application/json',
+                Accept: 'application/json'
             }
         })
             .then( response => {
@@ -129,7 +129,8 @@ const BargainCreateForm: React.FC<ImageUpdateFormProps> = ({ onSubmit }) => {
         axios.post(PUBLIC_URL + `${process.env.REACT_APP_BARGAIN_CREATE}`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token'),
+                Accept: 'application/json'
             },
         })
             .then((response) => {

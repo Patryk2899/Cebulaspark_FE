@@ -47,6 +47,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         setAnchorElUser(null);
     };
 
+    const handleCreateBargain = () => {
+        navigate('/bargain/create')
+    }
+
     const handlePasswordChange = () => {
         axios.post(PUBLIC_URL + `${process.env.REACT_APP_PASSWORD_RESET}`, {}, {
             headers: {
@@ -67,11 +71,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
 
     const handleLogout = () => {
-        axios.delete(PUBLIC_URL + `${process.env.REACT_APP_LOGOUT_URL}`, {
+        axios.post(PUBLIC_URL + `${process.env.REACT_APP_LOGOUT_URL}`, null, {
             headers: {
-                'content-type': 'application/json',
-                accept: 'application/json',
-                'Authorization': localStorage.getItem('token')
+                'Authorization': localStorage.getItem('token'),
             }
         })
             .then( response => {
@@ -126,11 +128,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))}
                         </Menu>
                     </Box>
                         <Typography
@@ -152,15 +149,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                             CEBULASPARK
                         </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{my: 2, color: 'white', display: 'block'}}
-                            >
-                                {page}
-                            </Button>
-                        ))}
                     </Box>
 
                     <Box sx={{flexGrow: 0}}>
@@ -187,13 +175,16 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                         >
                             {
                                 <div>
-                                    <MenuItem key={1} onClick={handlePasswordChange}>
+                                    <MenuItem key={1} onClick={handleCreateBargain}>
+                                        <Typography textAlign="center">Create bargain</Typography>
+                                    </MenuItem>
+                                    <MenuItem key={2} onClick={handlePasswordChange}>
                                         <Typography textAlign="center">Change password</Typography>
                                     </MenuItem>
-                                    <MenuItem key={2} onClick={handleEmailChange}>
+                                    <MenuItem key={3} onClick={handleEmailChange}>
                                         <Typography textAlign="center">Change email</Typography>
                                     </MenuItem>
-                                    <MenuItem key={3} onClick={handleLogout}>
+                                    <MenuItem key={4} onClick={handleLogout}>
                                         <Typography textAlign="center">Logout</Typography>
                                     </MenuItem>
                                 </div>
