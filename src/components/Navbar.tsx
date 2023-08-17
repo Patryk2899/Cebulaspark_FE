@@ -23,8 +23,16 @@ import {toast} from "react-toastify";
 
 const pages = ['Products', 'Pricing', 'Blog'];
 
+type sortByTitle = () => void;
+type sortByNewest = () => void;
+type sortByOldest = () => void;
+
 interface NavbarProps {
-    isLoggedIn: boolean
+    isLoggedIn: boolean;
+    showSorting: boolean
+    sortByTitle: sortByTitle;
+    sortByNewest: sortByNewest;
+    sortByOldest: sortByOldest;
 }
 
 const Navbar: React.FC<NavbarProps> = (props) => {
@@ -100,6 +108,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                         <Logo className="navbar"/>
                     </IconButton>
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+                        {props.showSorting &&
+                        <>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -110,6 +120,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                         >
                             <MenuIcon/>
                         </IconButton>
+
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorElNav}
@@ -128,7 +139,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
+                            <MenuItem key={5} onClick={props.sortByNewest}>
+                                <Typography textAlign="center">Newest</Typography>
+                            </MenuItem>
+                            <MenuItem key={6} onClick={props.sortByOldest}>
+                                <Typography textAlign="center">Oldest</Typography>
+                            </MenuItem>
+                            <MenuItem key={7} onClick={props.sortByTitle}>
+                                <Typography textAlign="center">Sort by title</Typography>
+                            </MenuItem>
                         </Menu>
+                        </> }
                     </Box>
                         <Typography
                             variant="h5"
@@ -149,6 +170,29 @@ const Navbar: React.FC<NavbarProps> = (props) => {
                             CEBULASPARK
                         </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+                        {props.showSorting && <>
+                        <Button
+                            key={5}
+                            onClick={props.sortByNewest}
+                            sx={{my: 2, color: 'white', display: 'block'}}
+                        >
+                            Newest
+                        </Button>
+                        <Button
+                            key={5}
+                            onClick={props.sortByOldest}
+                            sx={{my: 2, color: 'white', display: 'block'}}
+                        >
+                            Oldest
+                        </Button>
+                        <Button
+                            key={5}
+                            onClick={props.sortByTitle}
+                            sx={{my: 2, color: 'white', display: 'block'}}
+                        >
+                            Sort by title
+                        </Button>
+                        </> }
                     </Box>
 
                     <Box sx={{flexGrow: 0}}>

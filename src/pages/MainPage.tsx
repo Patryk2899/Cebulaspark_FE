@@ -24,6 +24,7 @@ interface response {
     description: string;
     link: string;
     main_image_url: string;
+    created_at: string;
 }
 
 const MainPage: FC = () => {
@@ -40,6 +41,21 @@ const MainPage: FC = () => {
 
     const updateCategory = async (value: CategoryData) => {
         setCategory(value as CategoryData);
+    }
+
+    const sortByTitle = () => {
+        if(data) {
+            setData(data.slice().sort((a, b) => a.title.localeCompare(b.title)))
+            console.log("HERERRERE")
+            return
+        }
+    }
+    const sortByNewest = () => {
+        setData(data.slice().sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
+    }
+
+    const sortByOldest = () => {
+        setData(data.slice().sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()))
     }
 
     const fetchData = async (p: any) => {
@@ -89,7 +105,13 @@ const MainPage: FC = () => {
     return (
         <div>
             <div>
-                <Navbar isLoggedIn={isLogged}/>
+                <Navbar
+                    isLoggedIn={isLogged}
+                    showSorting={true}
+                    sortByNewest={sortByNewest}
+                    sortByOldest={sortByOldest}
+                    sortByTitle={sortByTitle}
+                />
             </div>
             <Grid
                 container
