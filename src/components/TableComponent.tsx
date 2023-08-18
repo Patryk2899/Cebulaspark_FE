@@ -8,8 +8,9 @@ import {
     TableContainer,
     TableHead,
     TableProps,
-    TableRow
+    TableRow, Typography
 } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import  "../styles/navbar.css"
 import { styled } from '@mui/system';
 import TablePagination, {
@@ -45,17 +46,25 @@ interface props {
 }
 
 const columns = [
-    { id: "title", label: "Title", minWidth: 50, align: "right" },
-    { id: "description", label: "Description", minWidth: 170, align: "right" },
-    { id: "image", label: "Image", minWidth: 170, align: "right" },
-    { id: "id", label: "Link", minWidth: 50, align: "right" }
+    { id: "title", label: "Title", minWidth: "10%", align: "left" },
+    { id: "description", label: "Description", minWidth: "30%", align: "left", whiteSpace: "wrap" },
+    { id: "image", label: "Image", minWidth: "50%", align: "left" },
+    { id: "id", label: "Link", minWidth: "10%", align: "left" }
 
 ]
+
+const useStyles = makeStyles(() => ({
+    responsiveImage: {
+        maxWidth: '100%',
+        height: 'auto',
+    },
+}));
 
 const TableComponent: React.FC<props> = (props) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    const classes = useStyles();
     // @ts-ignore
     const {t} = useTranslation();
     const navigate = useNavigate();
@@ -107,7 +116,9 @@ const TableComponent: React.FC<props> = (props) => {
                                         align={column.align}
                                         style={{ minWidth: column.minWidth }}
                                     >
-                                        {column.label}
+                                        <Typography variant="h6" gutterBottom>
+                                            {column.label}
+                                        </Typography>
                                     </TableCell>
                                 ))}
                             </TableRow>
@@ -118,17 +129,17 @@ const TableComponent: React.FC<props> = (props) => {
                                 .map(data => {
                                     return (
                                         <TableRow key={data.id}>
-                                            <TableCell component="th" scope="row" align="inherit" size="small">
+                                            <TableCell component="th" scope="row" align="inherit" size="small" style={{ minWidth: columns[0].minWidth }}>
                                                 { data.title }
                                             </TableCell>
-                                            <TableCell component="th" scope="row" align="inherit" size="small">
-                                                { data.description.slice(0, 30) + '...' }
+                                            <TableCell component="th" scope="row" align="inherit" size="small" style={{ minWidth: columns[1].minWidth }}>
+                                                { data.description.slice(0, 60) + '...' }
                                             </TableCell>
-                                            <TableCell component="th" scope="row" align="inherit" size="small">
-                                                <img src={ data.main_image_url } />
+                                            <TableCell component="th" scope="row" align="inherit" size="small" style={{ minWidth: columns[2].minWidth, height: "auto" }}>
+                                                <img src={ data.main_image_url } className={classes.responsiveImage} />
                                             </TableCell>
-                                            <TableCell component="th" scope="row" align="inherit" size="small">
-                                                <Button variant="contained" onClick={() => handleClick(data.id)}>Contained</Button>
+                                            <TableCell component="th" scope="row" align="inherit" size="small" style={{ minWidth: columns[3].minWidth }}>
+                                                <Button variant="contained" onClick={() => handleClick(data.id)}>Check</Button>
                                             </TableCell>
                                         </TableRow>
                                     );

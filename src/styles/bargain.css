@@ -6,10 +6,16 @@
 
 .text {
     padding: 10px;
+    white-space: normal;
 }
 
 .image img {
     max-width: 100%; /* Ensure the image scales down on smaller screens */
+}
+
+.button {
+    justify-content: center;
+    display: flex;
 }
 
 @media (max-width: 768px) {

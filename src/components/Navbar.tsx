@@ -74,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     }
 
     const handleEmailChange = () => {
-        navigate('/change/email')
+        navigate('/email/change')
         setAnchorElUser(null);
     }
 

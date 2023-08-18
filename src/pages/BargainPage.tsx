@@ -8,6 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import "../styles/bargain.css"
 import axios from "axios";
 import {PUBLIC_URL} from "../api/api-commons";
+import {makeStyles} from "@mui/styles";
 interface User {
     id: number
     email: string
@@ -35,7 +36,12 @@ interface BargainProps {
     user: User
 }
 
-
+const useStyles = makeStyles(() => ({
+    responsiveImage: {
+        maxWidth: '100%',
+        height: 'auto',
+    },
+}));
 
 const BargainPage: FC<BargainProps> = (props) => {
 
@@ -43,6 +49,7 @@ const BargainPage: FC<BargainProps> = (props) => {
     const [comments, setComments] = useState<Comment[]>([])
 
     const location = useLocation();
+    const classes = useStyles();
 
     const fetchComments = async () => {
         axios.get(PUBLIC_URL + `${process.env.REACT_APP_COMMENTS_URL}` + '/' + location.state.bargain.id, {
@@ -80,7 +87,7 @@ const BargainPage: FC<BargainProps> = (props) => {
                 <Grid container spacing={4}>
                     <Grid item xs={8} md={6}>
                         <div className="image">
-                            <img src={location.state.bargain.main_image_url} alt="Image Description" />
+                            <img src={location.state.bargain.main_image_url} alt="Image Description" className={classes.responsiveImage} />
                         </div>
                     </Grid>
                     <Grid item xs={8} md={6}>
