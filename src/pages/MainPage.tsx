@@ -4,9 +4,11 @@ import {checkTokenValidity} from "../api/user";
 import * as React from "react";
 import axios from "axios";
 import {PUBLIC_URL} from "../api/api-commons";
-import {FormControl, Grid, InputLabel, MenuItem, Select} from "@mui/material";
+import {FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import '../styles/main.css'
 import TableComponent from "../components/TableComponent";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from '@mui/icons-material/Search';
 
 interface CategoryData {
     id: number;
@@ -29,10 +31,20 @@ interface response {
 
 const MainPage: FC = () => {
 
+    const formControlStyle = {
+        width: '100%',
+        margin: '10px',
+    };
+
     const [data, setData] = React.useState<response[]>([]);
     const [isLogged, setIsLogged] = useState(false);
     const [categories, setCategories] = useState([])
     const [category, setCategory] = useState<CategoryData>(null)
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+    };
 
     const handleChange = async (event: React.ChangeEvent<CategoryData>) => {
         updateCategory(event.target.value as CategoryData).then();
@@ -93,6 +105,23 @@ const MainPage: FC = () => {
             })
     }
 
+    const handleSearch = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const query = searchQuery == '' ? null : searchQuery
+        axios.get(PUBLIC_URL + `${process.env.REACT_APP_BARGAIN_SHOW_URL}`, {
+            headers: {
+                'content-type': 'application/json',
+                accept: 'application/json',
+            },
+            params: {
+                category: category,
+                query: query
+            }
+        }).then(response => {
+            setData(response.data)
+            console.log(response.data)
+        })
+    }
+
     useLayoutEffect( () => {
         const checkToken = async () => {
             const result = await checkTokenValidity();
@@ -120,20 +149,37 @@ const MainPage: FC = () => {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Grid>
-                    <FormControl margin='normal' fullWidth>
-                        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={category}
-                            style={{ width: '150px' }}
-                            onChange={handleChange}
-                        >
-                            {categories.map(item => {
-                                return <MenuItem value={item}>{item.name}</MenuItem>;
-                            })}
-                        </Select>
+                <Grid marginTop="20px">
+                    <FormControl style={formControlStyle}>
+                        <Grid container spacing={2} marginRight="10px">
+                            <Grid marginRight="10px">
+                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={category}
+                                    style={{ width: '150px' }}
+                                    onChange={handleChange}
+                                >
+                                    {categories.map(item => {
+                                        return <MenuItem value={item}>{item.name}</MenuItem>;
+                                    })}
+                                </Select>
+                            </Grid>
+                            <Grid marginRight="10px">
+                                <TextField
+                                    variant="outlined"
+                                    value={searchQuery}
+                                    onChange={handleInputChange}
+                                    fullWidth="100%"
+                                />
+                            </Grid>
+                            <Grid>
+                                <IconButton onClick={handleSearch} aria-label="Search">
+                                    <SearchIcon />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
                     </FormControl>
                 </Grid>
             </Grid>
